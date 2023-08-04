@@ -1,0 +1,10 @@
+<?php if($_notice['type'] != 3 && $_notice['type'] != 99){?>
+    <span class="level_box_fasee mr-1">
+      <?php if($_notice['from_user']['gid'] > 100 && $_notice['from_user']['gid'] < 108) { ?>
+      <img class="fasdf" src="<?php echo '/plugin/cf_theme_modern/img/gid_'.$_notice['from_user']['gid'].'.png';?>" alt>
+      <?php } else { ?>
+      <img class="fasdf" src="<?php echo '/plugin/cf_theme_modern/img/gid_'.$_notice['from_user']['gid'].'.png';?>" alt>
+      <?php } ?>
+      <span class="level_icon1"><?php echo $_notice['from_user']['groupname'];?></span>
+    </span>
+<?php } ?>

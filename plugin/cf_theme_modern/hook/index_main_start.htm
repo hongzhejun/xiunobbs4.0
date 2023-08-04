@@ -1,0 +1,40 @@
+<div class="card card-site-info border-1 hidden-lg">
+	<div class="m-2 cfli">
+		<ul>
+			<li>
+				<i class="icon fas fa-hashtag cficon"></i><br>
+				<span class="text-muted"><?php echo lang('threads');?>
+				<b style="color:#000"><?php echo $runtime['threads'];?></b></span>
+				<span class="text-muted d-block"><?php echo lang('today_threads');?>
+				<b style="color:#000"><?php echo $runtime['todaythreads'];?></b></span>
+			</li>
+			<li>
+				<i class="icon far fa-comments cficon"></i><br>
+				<span class="text-muted"><?php echo lang('posts');?>
+				<b style="color:#000"><?php echo $runtime['posts'];?></b></span>
+				<span class="text-muted d-block"><?php echo lang('today_posts');?>
+				<b style="color:#000"><?php echo $runtime['todayposts'];?></b></span>
+			</li>
+			<li>
+				<i class="icon fa fa-house-user cficon"></i><br>
+				<span class="text-muted"><?php echo lang('users');?>
+				<b style="color:#000"><?php echo $runtime['users'];?></b></span>
+				<?php if($runtime['onlines'] > 0) { ?>
+				<span class="text-muted d-block"><?php echo lang('online');?>
+				<b style="color:#000"><?php echo $runtime['onlines'];?></b></span>
+				<?php } ?>
+			</li>
+		</ul>
+	</div>
+</div>
+
+<?php $cf_theme_modern=kv_get('cf_theme_modern');if(isset($cf_theme_modern['announcement']) && $cf_theme_modern['announcement']) { ?>
+<div class="main_right_bottom module_box" style="margin-top: 0px;margin-bottom: 10px;">
+  <div class="main_right_item">
+    <p class="title"><span class="icon fas fa-bullhorn"></span> <?php echo lang('index_anouncement');?></p>
+  </div>
+  <div class="box_anm_type">
+      <?php echo $cf_theme_modern['index_anouncement'];?>
+  </div>
+</div>
+<?php  } ?>

@@ -1,0 +1,18 @@
+<?php 
+if(!empty($cf_theme_modern['background_url'])){
+	echo '<style type="text/css" name="cfbg">';
+	echo '#body { background-image: url('.$cf_theme_modern['background_url'].') !important; background-attachment: fixed !important;}.module_box,.card,.comment_info,.contetn_left .user_info,.contetn_left > ul,.contetn_right,.user .comment,.box { background-color: #ffffffbd !important;}.box_title { background: unset !important;}';
+	echo '</style>';
+}
+if(isset($cf_theme_modern['outer_style']) && $cf_theme_modern['outer_style']){
+//echo '<!--cf_theme_style_start-->';
+echo '<style type="text/css" name="cfcss">';
+echo $cf_theme_modern['outer_style'];
+echo '</style>';
+//echo '<!--cf_theme_style_end-->';
+}
+if(isset($cf_theme_modern['header_html']) && $cf_theme_modern['header_html']){
+echo $cf_theme_modern['header_html'];
+}
+?>
+<script src="view/js/jquery-3.1.0.js?1.0"></script>

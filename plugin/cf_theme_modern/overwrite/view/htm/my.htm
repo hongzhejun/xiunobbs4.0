@@ -1,0 +1,25 @@
+<template include="./plugin/cf_theme_modern/htm/my.template.htm">
+	<slot name="my_body">
+		<div class="line-height-4" style="display: flex;padding: 0 20px;">
+			<div class="col-md-6" style="padding: 20px 0;">
+				<span class="text-muted"><?php echo lang('threads').lang('colon');?></span><?php echo $user['threads'];?>
+				<br><span class="text-muted"><?php echo lang('posts').lang('colon');?></span><?php echo $user['posts'];?>
+				<!--{hook my_profile_posts_after.htm}-->
+			</div>
+			<div class="col-md-6" style="padding: 20px 0;">
+				<span class="text-muted"><?php echo lang('user_group').lang('colon');?></span><?php echo $user['groupname'];?>
+				<br><span class="text-muted"><?php echo lang('create_date').lang('colon');?></span><?php echo $user['create_date_fmt'];?>
+				<br><span class="text-muted"><?php echo lang('last_login_date').lang('colon');?></span><?php echo $user['login_date_fmt'];?>
+				<br><span class="text-danger"><?php echo lang('email').lang('colon');?></span><?php echo $user['email'];?>
+				<!--{hook my_profile_login_date_after.htm}-->
+			</div>
+		</div>	
+	</slot>
+</template>
+
+<script>
+$('li[data-active="my-profile"]').addClass('activeNav');
+$('li[data-active="my-profile"]').append('<span class="mine_post_tip"></span>');
+</script>
+
+<!--{hook my_profile_js.htm}-->

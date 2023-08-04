@@ -1,0 +1,37 @@
+<template include="./plugin/cf_theme_modern/htm/my.common.template.htm">
+	<slot name="my_nav">
+		<ul class="nav box_title">
+			<!--{hook my_nav_start.htm}-->
+			
+			<!--{hook my_nav_profile_before.htm}-->
+			<li data-active="my-profile"><?php echo lang('my_basic_profile');?></li>
+			<!--{hook my_nav_profile_after.htm}-->
+			
+			<!--{hook my_nav_password_before.htm}-->
+			<li data-active="my-password"><?php echo lang('modify_password');?></li>
+			<!--{hook my_nav_password_after.htm}-->
+			
+			<!--{hook my_nav_avatar_before.htm}-->
+			<li data-active="my-avatar"><?php echo lang('modify_avatar');?></li>
+			<!--{hook my_nav_avatar_after.htm}-->
+			
+			<!--{hook my_nav_end.htm}-->
+		</ul>
+	</slot>
+</template>
+
+<script>
+$('li[data-active="nav-menu-my"]').addClass('active');
+$('li[data-active="menu-my"]').addClass('activeNav');
+$(".item-nav-title").text("<?php echo lang('my_profile');?>");
+</script>
+<?php
+echo '<script>$(\'li[data-active="my-profile"]\').click(function(){'.
+'location.href="'.url("my").'";'.
+'});$(\'li[data-active="my-password"]\').click(function(){'.
+'location.href="'.url("my-password").'";'.
+'});$(\'li[data-active="my-avatar"]\').click(function(){'.
+'location.href="'.url("my-avatar").'";'.
+'})</script>';
+?>
+<!--{hook my_js.htm}-->

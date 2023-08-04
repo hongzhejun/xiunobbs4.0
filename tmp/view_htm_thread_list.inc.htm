@@ -1,0 +1,103 @@
+
+
+					<?php 
+					if($threadlist) { 
+						$have_allowtop = 0;
+						foreach($threadlist as &$_thread) {
+							$_thread['allowtop'] = forum_access_mod($_thread['fid'], $gid, 'allowtop');
+							if($_thread['allowtop']) $have_allowtop = 1;
+						}
+					}
+					?>
+
+					<?php if($threadlist) { foreach($threadlist as &$_thread) { ?>
+					<li class="media thread tap <?php echo $_thread['top_class'];?>"
+						data-href="<?php echo url("thread-$_thread[tid]");?>" data-tid="<?php echo $_thread['tid'];?>">
+
+						<a href="<?php echo url("user-$_thread[uid]");?>" tabindex="-1" class="mt-1 mr-3">
+							<img class="avatar-3" src="<?php echo $_thread['user_avatar_url'];?>">
+						</a>
+						
+						
+					
+						<div class="media-body">
+							<div class="subject break-all">
+								<?php if($have_allowtop) { ?>
+								<?php if($_thread['allowtop']) { ?>
+								<input type="checkbox" name="modtid" value="<?php echo $_thread['tid']; ?>" />
+								<?php } ?>
+
+								<?php } ?>
+								
+						<?php if($_thread['top'] > 0) { ?>
+								<i  data-toggle="tooltip" data-placement="top" title="置顶" class="iconfont icon-daiban" ></i>
+								<?php } ?>
+								<?php if($_thread['content_buy'] > 0)
+{ ?><i class="icon-shopping-cart" style="color:gold;" aria-hidden="true" title="Purchase NOW!"></i> <?php } ?>
+
+								
+								<a href="<?php echo url("thread-$_thread[tid]");?>"><?php echo $_thread['subject'];?></a>
+								
+
+								
+								
+
+								
+								<?php if($_thread['closed'] > 0) { ?><i class="icon-lock"></i><?php } ?>
+								
+
+							</div>
+
+							<div class="d-flex justify-content-between small mt-1">
+								<div>
+									<?php if ($route == 'index') { ?>
+										<a href="<?php echo url("forum-$_thread[fid]");?>" title="<?php echo $_thread['forumname'];?>" class="text-grey style3-thread-forum-name bg-light"><?php echo $_thread['forumname'];?></a>
+									<?php } ?>
+									
+									<a href="<?php echo url("user-$_thread[uid]");?>" class="username text-muted mr-1 <?php if($_thread['lastuid']) { ?> hidden-sm<?php } ?>"
+										uid="<?php echo $_thread['uid'];?>"><?php echo $_thread['username'];?>
+										
+									</a>
+									<span
+										class="date text-grey<?php if($_thread['lastuid']) { ?> hidden-sm<?php } ?>"><?php echo $_thread['create_date_fmt'];?></span>
+
+									
+									<?php if($_thread['lastuid']) { ?>
+									<span>
+										<span class="text-grey mx-2"><i class="fa fa-reply"></i></span>
+										<span class="username text-muted mr-1" uid="<?php echo $_thread['lastuid'];?>"><?php echo $_thread['lastusername'];?>
+											
+										</span>
+										<span class="text-grey"><span class="hidden-sm"><?php echo lang('last_reply');?></span>
+											<?php echo $_thread['last_date_fmt'];?></span>
+									</span>
+									<?php } ?>
+									
+
+								</div>
+								<div class="text-muted style3-ml-2 text-nowrap">
+									
+									<span class="ml-2 d-none"><i class="icon-eye"></i> <?php echo $_thread['views'];?></span>
+									
+
+									
+									<?php if ($_thread['posts'] > 0) {?>
+									<span class="ml-2"><i class="fa fa-comment-dots"></i> <?php echo $_thread['posts'];?></span>
+									<?php } ?>
+									
+								</div>
+							</div>
+						</div>
+					</li>
+					<?php }} else { ?>
+					<!-- <li>
+						<div><?php echo lang('none');?></div>
+					</li> -->
+					<div class="row justify-content-center">
+						<div class="col-6">
+							<div class="text-center my-5" style="color:gainsboro"><i
+									class="fa fa-bug display-1"></i><br /><?php echo lang('none');?></div>
+						</div>
+					</div>
+					<?php } ?>
+					

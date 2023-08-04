@@ -1,0 +1,156 @@
+<?php include _include(APP_PATH.'view/htm/header.inc.htm');?>
+
+<div class="row justify-content-center">
+    <div class="col-lg-12">
+        <div class="card user_header" style="overflow: hidden;">
+            <div style="background-image: url('<?php echo $user['avatar_url'];?>');background-size: cover;background-position:center;">
+                <div class="w-100 pt-5 user-background">
+                <div class="col-12 py-3">
+                    <div class="media">
+                        
+                        <img class="avatar-5 rounded-circle border mr-4" src="<?php echo $user['avatar_url'];?>">
+                        <div class="media-body mt-3">
+                            <div class="name-info">
+                                <div class="mb-3">
+                                    <span class="h4 font-weight-bold text-white"><?php echo $user['username'];?></span>
+                                    
+                                </div>
+                                <div class="d-flex justify-content-between">
+                                <div>
+                                    <span class="badge jb-blue mr-1">UID:<?php echo $user['uid'];?></span>
+                                    <span class="badge badge-info jb-cyan"><?php echo $user['groupname'];?></span>
+                                    
+                                </div>
+                                <div class="">
+                                    <a class="btn btn-primary jb-blue" href="<?php echo url("user-$user[uid]");?>" role="button">个人主页</a>
+                                    
+                                </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="btn-group mb-3 d-lg-none" role="group" id="my_mobile_nav">
+
+	
+	<a role="button" class="btn btn-secondary" data-active="menu-my" href="<?php echo url('my');?>">个人资料</a>
+	
+	
+	
+	<a role="button" class="btn btn-secondary" data-active="menu-my-thread" href="<?php echo url('my-thread');?>">论坛帖子</a>
+	<a role="button" class="btn btn-secondary" data-active="menu-my-credits" href="<?php echo url('my-credits');?>"><?php echo lang('credits');?></a>
+	
+</div>
+
+<div class="row">
+	<!-- 左侧菜单 -->
+	<div class="col-lg-2 hidden-md hidden-sm" id="my_aside">
+		<div class="card">
+			<div class="card-body text-center">
+				
+				<img class="avatar-4" src="<?php echo $user['avatar_url'];?>">
+				<br><?php echo $user['username'];?>
+				
+			</div>
+			<div class="list-group list-group-flush text-center">
+				
+				<a href="<?php echo url('my');?>" class="list-group-item list-group-item-action" data-active="menu-my">个人资料</a>
+				
+				
+				
+				<a href="<?php echo url('my-thread');?>" class="list-group-item list-group-item-action" data-active="menu-my-thread">论坛帖子</a>
+				<a href="<?php echo url('my-credits');?>" class="list-group-item list-group-item-action" data-active="menu-my-credits"><?php echo lang('credits'); ?></a>
+				
+			</div>
+		</div>
+	</div>
+	<!-- 右侧内容 -->
+	<div class="col-lg-10" id="my_main">
+		<div class="card hidden-lg">
+	<div id="my_mobile_nav2" class="text-center">
+		<div class="list-group list-group-flush list-group-horizontal">
+			
+			<a href="<?php echo url('my');?>" class="list-group-item list-group-item-action" data-active="menu-my">资料</a>
+			
+				
+			
+			<a href="<?php echo url('my-thread');?>" class="list-group-item list-group-item-action" data-active="menu-my-thread">帖子</a>
+			<a href="<?php echo url('my-credits');?>" class="list-group-item list-group-item-action" data-active="menu-my-credits"><?php echo lang('credits'); ?></a>
+				
+		</div>
+	</div>
+</div>
+		<div class="card">
+			<div class="card-header">
+				
+				
+		<ul class="nav nav-tabs card-header-tabs">
+			
+			<li class="nav-item">
+				<a class="nav-link" href="<?php echo url("my-credits");?>" data-active="my-credits"><?php echo lang('credits');?></a>
+			</li>
+			<li class="nav-item">
+    <a class="nav-link" href="<?php echo url('my-trade');?>" data-active="my-trade"><?php echo lang('trade');?></a>
+</li>
+<li class="nav-item">
+    <a class="nav-link" href="<?php echo url('my-record');?>" data-active="my-record"><?php echo lang('record');?></a>
+</li>
+		</ul>
+	
+				
+			</div>
+			<div class="card-body">
+				
+				<div class="col-md-6 mx-auto">
+<?php $no_cache_user = user_read($uid);
+$progress=100; $max=1; $now=$no_cache_user['credits'];
+if($no_cache_user['gid']>100){
+	foreach($grouplist as $group) {
+		if($group['gid'] < 100) continue;
+		$n = $no_cache_user['credits'] ;
+		if($n > $group['creditsfrom'] && $n <= $group['creditsto']) {
+			$max=$group['creditsto'];
+			if($no_cache_user['groupname']!=$group['name']) {
+				$no_cache_user['groupname']=$group['name'];
+				user_update_group($uid);
+			}
+			break;
+		}
+	}
+	$progress = (int)($now/$max * 100.0);
+}
+
+?>
+			<p><?php echo lang('user_group');?>: <?php echo $no_cache_user['groupname'];?></p>
+			<div class="progress"><div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: <?php echo $progress;?>%;" aria-valuenow="<?php echo $progress;?>" aria-valuemin="0" aria-valuemax="100"><?php if($progress>=20) echo $progress,'%';?></div><?php if($progress<20) echo $progress,'%';?></div>
+			<hr>
+		    <div class="input-group mb-3"><div class="input-group-prepend"><span class="input-group-text" style="width:80px;display:block;"><i class="icon-flask" aria-hidden="true"></i> <?php echo lang('credits1');?></span></div><input type="text" class="form-control" readonly style="background-color:white;" value="<?php echo $no_cache_user['credits'];?>"></div>
+            <div class="input-group mb-3"><div class="input-group-prepend"><span class="input-group-text" style="width:80px;display:block;"><i class="icon-diamond" aria-hidden="true"></i> <?php echo lang('credits2');?></span></div><input type="text" class="form-control" readonly style="background-color:white;" value="<?php echo $no_cache_user['golds'];?>"></div>
+            <div class="input-group mb-3"><div class="input-group-prepend"><span class="input-group-text" style="width:80px;display:block;"><i class="icon-jpy" aria-hidden="true"></i> <?php echo lang('credits3');?></span></div><input type="text" class="form-control" readonly style="background-color:white;" value="<?php echo $no_cache_user['rmbs']/100.0;?>"></div>
+		
+	</div>
+				
+			</div>
+		</div>
+		
+	</div>
+</div>
+
+
+
+<?php include _include(APP_PATH.'view/htm/footer.inc.htm');?>
+
+
+
+<script>
+$('a[data-active="menu-my-credits"]').addClass('active');
+</script>
+<script>
+    $('a[data-active="my-credits"]').addClass('active');
+</script>

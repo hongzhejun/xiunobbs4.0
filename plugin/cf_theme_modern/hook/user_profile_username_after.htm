@@ -1,0 +1,12 @@
+<div class="member_icon">
+  <div class="level_box" style="margin-left: 10px;">
+    <div class="fasee">
+      <?php if($_user['gid'] > 100 && $_user['gid'] < 108) { ?>
+      <img class="fasdf" src="<?php echo './plugin/cf_theme_modern/img/gid_'.$_user['gid'].'.png';?>" alt>
+      <?php } else { ?>
+      <img class="fasdf" src="<?php echo './plugin/cf_theme_modern/img/gid_'.$_user['gid'].'.png';?>" alt>
+      <?php } ?>
+      <span class="level_icon1"><?php echo $_user['groupname'];?></span>
+    </div>
+  </div>
+</div>

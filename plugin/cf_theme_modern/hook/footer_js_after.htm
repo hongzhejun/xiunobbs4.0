@@ -1,0 +1,30 @@
+<script>
+$(window).scroll(function() {
+	if ($(window).scrollTop() > 52) {
+    $("#app").addClass("scrolled");
+	} else {
+    $("#app").removeClass("scrolled");
+	}
+});
+$(function(){
+	$("#nav-bars").on("click",function(){
+		//$(".be-dropdown-menu").slideDown();
+		var t = this;
+		$("#app").addClass("drawerOpen");
+		this.$backdrop = $("<div/>").addClass("drawer-backdrop fade").appendTo("body").click((function() {
+      return $("#app").removeClass("drawerOpen"),$(".drawer-backdrop").remove();
+    })),
+    setTimeout((function() {
+      return t.$backdrop.addClass("in")
+    }));
+	});
+});
+</script>
+<?php
+if(isset($cf_theme_modern['footer_html']) && $cf_theme_modern['footer_html']){
+echo $cf_theme_modern["footer_html"];
+}
+if(isset($cf_theme_modern['footer_script']) && $cf_theme_modern['footer_script']){
+echo '<script type="text/javascript">'.$cf_theme_modern["footer_script"].'</script>';
+}
+?>

@@ -1,0 +1,14 @@
+<script>
+var cf_side_btn = $('.cf_side_btn .btn_s_open');
+cf_side_btn.on('click', (function(){
+	if($('.aside').hasClass('d-lg-block')){
+		$('.aside').removeClass('d-lg-block').addClass('d-none');
+		$('.main').removeClass('col-lg-9').addClass('col-lg-12');
+		cf_side_btn.text("<?php echo lang('open_sidebar');?>").attr("title", "<?php echo lang('open_sidebar');?>");
+	}else{
+		$('.aside').removeClass('d-none').addClass('d-lg-block');
+		$('.main').removeClass('col-lg-12').addClass('col-lg-9');
+		cf_side_btn.text("<?php echo lang('close_sidebar');?>").attr("title", "<?php echo lang('close_sidebar');?>");
+	}
+})); 
+</script>

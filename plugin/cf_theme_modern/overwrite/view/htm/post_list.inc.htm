@@ -1,0 +1,77 @@
+<?php
+	empty($allowupdate) AND $allowupdate = 0;
+	empty($allowdelete) AND $allowdelete = 0;
+	empty($allowpost) AND $allowpost = 0;
+?>
+<!--{hook post_list_inc_start.htm}-->
+
+<?php if($postlist) { foreach($postlist as $_post) { ?>
+	<li class="media post_li post" data-pid="<?php echo $_post['pid'];?>" data-uid="<?php echo $_post['uid'];?>">
+		<a href="<?php echo url("user-$_post[uid]");?>" class="use_img" tabindex="-1">
+			<img width="100%" src="<?php echo $_post['user_avatar_url'];?>" alt>
+		</a>
+		<!--{hook post_list_inc_avatar_after.htm}-->
+		<div class="post_msg">
+			<div class="position_name">
+				<div class="flex_c">
+					<div style="display: flex;">
+						<!--{hook post_list_inc_username_before.htm}-->
+						<span class="username">
+							<a href="<?php echo url("user-$_post[uid]");?>" class="text-muted font-weight-bold"><?php echo $_post['username'];?></a>
+						</span>
+						<!--{hook post_list_inc_username_after.htm}-->
+					</div>
+					
+					<!--{hook post_list_inc_create_date_before.htm}-->
+					<span class="post_time"><?php echo $_post['create_date_fmt'];?></span>
+					<!--{hook post_list_inc_create_date_after.htm}-->
+				</div>
+				
+				<span class="flot_con flot_icon<?php if($_post['floor']<5) {echo $_post['floor'] - 1;} else echo "4";?>"><a href="<?php echo url("thread-$_post[tid]-$page").'#'.$_post['pid'];?>"><?php $floor_n=$_post['floor'] - 1;if($_post['floor']<5) {echo lang('floor_'.$floor_n);} else echo $floor_n.lang('floor');?></a></span>
+				
+			</div>
+			<div class="message mt-1 break-all">
+			
+				<!--{hook post_list_inc_subject_before.htm}-->
+				<?php if(!empty($_post['subject'])) { ?>
+					<h6><a href="<?php echo url("thread-$_post[tid]");?>" target="_blank"><?php echo $_post['subject'];?></a></h6>
+				<?php } ?>
+				<!--{hook post_list_inc_subject_after.htm}-->
+				
+				<!--{hook post_list_inc_message_before.htm}-->
+				<?php echo $_post['message_fmt'];?>
+				<!--{hook post_list_inc_message_after.htm}-->
+				
+				<!--{hook post_list_inc_filelist_before.htm}-->
+				<?php echo post_file_list_html($_post['filelist']);?>
+				<!--{hook post_list_inc_filelist_after.htm}-->
+				
+			</div>
+			
+			<div class="positon">
+				<div class="op">
+					<!--{hook post_list_inc_quote_before.htm}-->
+					<?php if($allowpost) { ?>
+					<a href="javascript:void(0)" data-tid="<?php echo $_post['tid'];?>" data-pid="<?php echo $_post['pid'];?>" class="text-grey post_reply mr-3"><i class="icon far fa-comment-dots" title="<?php echo lang('reply');?>"></i> <?php echo lang('reply');?></a>
+					<?php } ?>
+					<!--{hook post_list_inc_quote_after.htm}-->
+					
+					<!--{hook post_list_inc_update_before.htm}-->
+					<?php if($allowupdate || $_post['allowupdate']) { ?>
+					<a href="<?php echo url("post-update-$_post[pid]");?>" class="text-grey post_update mr-3"><i class="icon far fa-edit" title="<?php echo lang('edit');?>"></i> <?php echo lang('edit');?></a>
+					<?php } ?>
+					<!--{hook post_list_inc_update_after.htm}-->
+				
+					<!--{hook post_list_inc_delete_before.htm}-->
+					<?php if($allowdelete || $_post['allowdelete']) { ?>
+					<a data-href="<?php echo url("post-delete-$_post[pid]");?>" data-confirm-text="<?php echo lang('confirm_delete');?>" href="javascript:void(0);" class="text-grey post_delete _confirm mr-3"><i class="icon fas fa-trash-alt" title="<?php echo lang('delete');?>"></i> <?php echo lang('delete');?></a>
+					<?php } ?>
+					<!--{hook post_list_inc_delete_after.htm}-->
+				</div>
+			</div>
+
+		</div>
+	</li>
+<?php }} ?>
+
+<!--{hook post_list_inc_end.htm}-->

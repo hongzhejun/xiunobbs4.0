@@ -1,0 +1,246 @@
+<?php include _include(APP_PATH.'view/htm/header.inc.htm');?>
+
+<!--{hook user_create_start.htm}-->
+
+<div class="row">
+	<div class="col-lg-12 mx-auto">
+		<!--{hook user_create_card_before.htm}-->
+		<div class="register-page">
+			<div class="left">
+				<img src="plugin/cf_theme_modern/img/register_bg.png" alt>
+				<img src="<?php echo $register_img_url;?>" alt class="text-box">
+				<div><a href="<?php echo 'http://'.$_SERVER['SERVER_NAME'];?>" target="_blank">Copyright © <?php echo date("Y").' '.$conf['sitename']?></a></div>
+			</div>
+			<div class="right">
+				<div class="title"><?php echo lang('register');?>
+					<!--{hook user_create_title_after.htm}-->
+				</div>
+				<div class="nav-already"><?php echo lang('acc_already');?><a href="<?php echo url('user-login');?>" class="login-now"><?php echo lang('login_now');?></a></div>
+				<div class="form_group_component">
+				<form action="<?php echo url('user-create');?>" method="post" class="form">
+					<div class="my-input web-pad-pc">
+						<div class="my-form-group">
+							<input type="text" class="form-control" placeholder="<?php echo lang('username');?>" name="username" id="username" onkeyup="usernameCheck()">
+						</div>
+						<span id="chk_username"></span>
+					</div>
+					<!--{hook user_create_username_after.htm}-->
+					
+					<div class="my-input web-pad-pc">
+						<div class="my-form-group">
+							<input type="password" class="form-control" placeholder="<?php echo lang('password');?>" name="password0" id="password0" onkeyup="passwordCheck()">
+						</div>
+						<div class="my-form-group">
+							<input type="password" class="form-control" placeholder="<?php echo lang('password2');?>" name="password" id="password" onkeyup="passwordCheck()">
+						</div>
+						<span id="chk_repeater"></span>
+					</div>
+					<!--{hook user_create_password_after.htm}-->
+					
+					<div class="my-input web-pad-pc">
+						<div class="my-form-group">
+							<input type="email" class="form-control" placeholder="<?php echo lang('email');?>" name="email" id="email" onkeyup="emailCheck()" required>
+						</div>
+						<span id="chk_email"></span>
+					</div>
+					<!--{hook user_create_email_after.htm}-->
+					
+					<?php if($conf['user_create_email_on']) { ?>
+					<div class="my-input web-pad-pc">
+						<div class="my-form-group">
+							<input type="text" class="form-control" placeholder="<?php echo lang('verify_code');?>" name="code" id="code">
+							<span class="validate-code web-pad-pc">
+								<button type="submit" class="my-button button" id="sendcode" data-loading-text="<?php echo lang('sending');?>..." action="<?php echo url('user-send_code-user_create');?>"><?php echo lang('send_verify_code');?></button>
+							</span>
+						</div>
+					</div>
+					<?php } ?>
+					
+					<span class="submit-btn web-pad-pc web-light">
+					<div class="submit-button">
+						<button type="submit" class="my-button submit mt-3 mr-2" style="<?php echo !empty($agreebbrule_url)?'width:80px;':'width:100%;' ?>" id="submit" data-loading-text="<?php echo lang('submiting');?>..." disabled><?php echo lang('register');?></button>
+						<?php if(!empty($agreebbrule_url)){ ?>
+						<input type="checkbox" name="agreebbrule" value="<?php echo $time;?>" id="agreebbrule" onclick="agreeCheck()">
+						<label for="agreebbrule"><?php echo lang('agree');?><a href="<?php echo $agreebbrule_url;?>" target="_blank"><?php echo lang('website_terms_of_service');?></a></label>
+						<?php } ?>
+					</div>
+					</span>
+					<!--{hook user_create_submit_after.htm}-->
+					
+					<div class="media d-none">
+						<div>
+							<!--{hook user_create_form_footer_left.htm}-->
+						</div>
+						<div class="media-body text-right">
+							<!--{hook user_create_form_footer_right_start.htm}-->
+							<a href="<?php echo url('user-login');?>" class="text-muted"><small><?php echo lang('user_login');?></small></a>
+							<?php if(!empty($conf['user_resetpw_on'])) { ?>
+							<a href="<?php echo url('user-resetpw');?>" class="text-muted ml-3"><small><?php echo lang('forgot_pw');?></small></a>
+							<?php } ?>
+							<!--{hook user_create_form_footer_right_end.htm}-->
+						</div>
+					</div>
+					
+				</form>
+			</div>
+			</div>
+		</div>
+		<!--{hook user_create_card_after.htm}-->
+	</div>
+</div>
+
+<!--{hook user_create_end.htm}-->
+
+<?php include _include(APP_PATH.'view/htm/footer.inc.htm');?>
+
+<script src="<?php echo $conf['view_url'];?>js/md5.js"></script>
+
+<script>
+var jform = $('.form');
+var jsubmit = $('#submit');
+var jsend = $('#sendcode');
+var referer = '<?php echo $user_create_end_referer;?>';
+jsend.on('click', function() {
+	jform.reset();
+	jsend.button('loading');
+	var postdata = jform.serialize();
+	$.xpost(jsend.attr('action'), postdata, function(code, message) {
+		if(code == 0) {
+			$('#code').focus();
+			var t = 60;
+			jsend.button('<?php echo lang('user_send_sucessfully');?> 60 ');
+			jsubmit.button('reset');
+			var handler = setInterval(function() {
+				jsend.button('<?php echo lang('user_send_sucessfully');?> '+(--t)+' ');
+				if(t == 0) {
+					clearInterval(handler);
+					jsend.button('reset');
+				}
+			}, 1000);
+		} else if(code < 0) {
+			$.alert(message, -1);
+			jsend.button('reset');
+		} else {
+			jform.find('[name="'+code+'"]').alert(message).focus();
+			jsend.button('reset');
+		}
+	});
+	return false;
+});
+
+jform.on('submit', function() {
+	if(submitCheck()){
+		var postdata = jform.serializeObject();
+		jsubmit.button('loading');
+		postdata.password0 = $.md5(postdata.password0);
+		postdata.password = $.md5(postdata.password);
+		$.xpost(jform.attr('action'), postdata, function(code, message) {
+			if(code == 0) {
+				jsubmit.button(message).delay(1000).location(referer);
+			} else if(xn.is_number(code)) {
+				$.alert(message);
+				jsubmit.button('reset');
+			} else {
+				jform.find('[name="'+code+'"]').alert(message).focus();
+				jsubmit.button('reset');
+			}
+		});
+		return false;
+	}
+	return false;
+});
+
+function passwordCheck() {
+	var password = document.getElementById("password0").value;
+	var repassword = document.getElementById("password").value;
+	var username = document.getElementById("username").value;
+	
+	if(password == repassword) {
+		if(password == "" || password == null){
+			document.getElementById("chk_repeater").innerHTML="<font color='red'><?php echo lang('password_can_not_be_empty');?></font>";
+			return false;
+		}else if(password == username)
+		{
+			document.getElementById("chk_repeater").innerHTML="<font color='red'><?php echo lang('password_cannot_be_the_same_as_username');?></font>";
+			return false;
+		}else if(cf.is_complex_password(password) < '<?php echo $password_complexity;?>')
+		{
+			document.getElementById("chk_repeater").innerHTML="<font color='red'><?php echo lang('password_complexity_is_not_up_to_standard').$password_complexity;?></font>";
+			return false;
+		}else {
+			document.getElementById("chk_repeater").innerHTML="<font color='green'><?php echo lang('is_valid');?></font>";
+		return true;
+		}
+	}else {
+		document.getElementById("chk_repeater").innerHTML="<font color='red'><?php echo lang('the_passwords_entered_twice_do_not_match');?></font>";
+		return false;
+	}
+}
+function emailCheck() {
+	var email = document.getElementById("email").value;
+
+	if(xn.is_email(email)) {
+		document.getElementById("chk_email").innerHTML="<font color='green'><?php echo lang('is_valid');?></font>";
+		if('<?php echo $agreebbrule_url;?>'==''&&'<?php echo $conf['user_create_email_on'];?>'=='0'){
+			document.getElementById("submit").disabled = false;
+		}
+		return true;
+	}else {
+		document.getElementById("chk_email").innerHTML="<font color='red'><?php echo lang('email_address_is_invalid');?></font>";
+		if('<?php echo $agreebbrule_url;?>'==''&&'<?php echo $conf['user_create_email_on'];?>'=='0'){
+			document.getElementById("submit").disabled = true;
+		}
+		return false;
+	}
+}
+function usernameCheck()
+{
+    var username = document.getElementById("username").value;
+	
+	if(!username.match(/^[ ]*$/)) {
+		if (username.indexOf(" ") != -1){
+			document.getElementById("chk_username").innerHTML="<font color='red'><?php echo lang('username_cant_include_cn_space');?></font>";
+			return false;
+		}else if((username.length < 3) || (username.length > 16))
+		{
+			document.getElementById("chk_username").innerHTML="<font color='red'><?php echo lang('username_length_exceeds_limit');?></font>";
+			return false;
+		}else if(charCheck(username)){
+			document.getElementById("chk_username").innerHTML="<font color='red'><?php echo lang('username_cannot_contain_special_characters');?></font>";
+			return false;
+		}else {
+			document.getElementById("chk_username").innerHTML="<font color='green'><?php echo lang('is_valid');?></font>";
+			return true;
+		}
+	}else {
+		document.getElementById("chk_username").innerHTML="<font color='red'><?php echo lang('username_can_not_be_empty');?></font>";
+		return false;
+	}
+}
+function charCheck(str)
+{
+    var arr = ["&", "\\", "/", "*", ">", "<", "@", "!"];
+    for (var i = 0; i < arr.length; i++)
+    {
+        for (var j = 0; j < str.length; j++)
+        {
+            if (arr[i] == str.charAt(j))
+            {
+                return true;
+            }
+        }
+    }   
+    return false;
+}
+function agreeCheck(){
+	document.getElementById("submit").disabled=!document.getElementById("agreebbrule").checked;
+}
+function submitCheck(){
+	usernameCheck();
+	passwordCheck();
+	emailCheck();
+	return usernameCheck()&&passwordCheck()&&emailCheck();
+}
+</script>
+
+<!--{hook user_create_js.htm}-->

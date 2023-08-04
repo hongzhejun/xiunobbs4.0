@@ -1,0 +1,94 @@
+<?php include _include(APP_PATH.'view/htm/header.inc.htm');?>
+
+<!--{hook my_common_start.htm}-->
+
+<div class="contetn">
+  <div class="contetn_left">
+    <div class="user_info">
+      <div class="user_image">
+        <!--{hook my_common_avatar_before.htm}-->
+        <img class="avatar" src="<?php echo $user['avatar_url'];?>" alt="<?php echo lang('modify_avatar');?>">
+        <span class="userName"><?php echo $user['username'];?></span>
+        <div class="member_icon">
+          <div class="level_box" style="margin-left: 10px;">
+            <div class="fasee">
+              <?php if($user['gid'] > 100 && $user['gid'] < 108) { ?>
+              <img class="fasdf" src="<?php echo './plugin/cf_theme_modern/img/gid_'.$user['gid'].'.png';?>" alt>
+              <?php } else { ?>
+              <img class="fasdf" src="<?php echo './plugin/cf_theme_modern/img/gid_'.$user['gid'].'.png';?>" alt>
+              <?php } ?>
+              <span class="level_icon1"><?php echo $user['groupname'];?></span>
+            </div>
+          </div>
+        </div>
+        <!--{hook my_common_username_after.htm}-->
+      </div>
+      <ul class="ulContent">
+        <li>
+          <div class="liItem">
+            <span><?php echo $user['threads'];?></span>
+            <span><?php echo lang('threads');?></span></div>
+        </li>
+        <li>
+          <div class="liItem">
+            <span><?php echo $user['posts'];?></span>
+            <span><?php echo lang('posts');?></span></div>
+        </li>
+        <!--{hook my_common_posts_after.htm}-->
+      </ul>
+    </div>
+    
+    <ul>
+    <!-- left -->
+      <!--{hook my_common_my_before.htm}-->
+      <li data-active="menu-my">
+        <div class="imgStyle">
+          <i class="icon fas fa-user-edit">&nbsp;&nbsp;&nbsp;</i>
+          <span class="navContent">
+          <?php echo lang('my_profile');?></span>
+        </div>
+      </li>
+			<!--{hook my_common_my_after.htm}-->
+      
+			<!--{hook my_common_my_thread_before.htm}-->
+      <li data-active="menu-my-thread">
+        <div class="imgStyle">
+          <i class="icon fas fa-bookmark">&nbsp;&nbsp;&nbsp;</i>
+          <span class="navContent">
+          <?php echo lang('my_threads');?></span>
+        </div>
+      </li>
+      <!--{hook my_common_my_thread_after.htm}-->
+
+      </ul>
+  </div>
+  <div class="contetn_right">
+  <!-- right -->
+    <!--{hook my_common_main_card_before.htm}-->
+    <div class="my_right">
+      <!--{hook my_common_my_nav_slot_before.htm}-->
+      <slot name="my_nav" />
+      <!--{hook my_common_my_nav_slot_after.htm}-->
+      
+      <!--{hook my_common_my_body_slot_before.htm}-->
+      <slot name="my_body" />
+			<!--{hook my_common_my_body_slot_after.htm}-->
+		</div>
+		<!--{hook my_common_main_card_after.htm}-->
+  </div>
+</div>
+
+<!--{hook my_common_end.htm}-->
+
+<?php include _include(APP_PATH.'view/htm/footer.inc.htm');?>
+
+<script>
+$("li[data-active='menu-my']").click(function(){
+location.href="<?php echo url('my');?>";
+})
+$("li[data-active='menu-my-thread']").click(function(){
+location.href="<?php echo url('my-thread');?>";
+})
+</script>
+
+<!--{hook my_common_js.htm}-->

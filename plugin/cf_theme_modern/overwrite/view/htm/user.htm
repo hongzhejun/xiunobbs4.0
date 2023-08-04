@@ -1,0 +1,29 @@
+<template include="./plugin/cf_theme_modern/htm/user.template.htm">
+	<slot name="user_body">
+
+	<div style="padding: 16px 20px;">
+		<div class="user_date_info">
+			<div class="details">
+			  <div class="item">
+				<span class="text-muted"><?php echo lang('credits');?></span>&nbsp;:&nbsp;
+				<span><?php echo $_user['credits'];?></span></div>
+			  <div class="item" style="margin-top: 8px;">
+				<span class="text-muted"><?php echo lang('golds');?></span>&nbsp;:&nbsp;
+				<span><?php echo $_user['golds'];?></span></div>
+			  <!--{hook user_profile_posts_after.htm}-->
+			  <div class="item" style="margin-top: 8px;">
+				<span class="text-muted"><?php echo lang('create_date');?></span>&nbsp;:&nbsp;
+				<span><?php echo $_user['create_date_fmt'];?></span></div>
+			  <div class="item" style="margin-top: 8px;">
+				<span class="text-muted"><?php echo lang('last_login_date');?></span>&nbsp;:&nbsp;
+				<span><?php echo $_user['login_date_fmt'];?></span></div>
+			  <!--{hook user_profile_login_date_after.htm}-->
+			</div>
+		</div>
+		<!--{hook user_index_delete_user_button_after.htm}-->
+	</div>
+		
+	</slot>
+</template>
+
+<!--{hook user_profile_js.htm}-->

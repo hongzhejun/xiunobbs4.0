@@ -1,0 +1,24 @@
+<template include="./plugin/cf_theme_modern/htm/user_thread.template.htm">
+	<slot name="user_body">
+	
+    <!--{hook user_thread_list_start.htm}-->
+    
+		<ul class="list-unstyled threadlist">
+			<?php include _include(APP_PATH.'view/htm/thread_list.inc.htm'); ?>
+		</ul>
+		
+		<?php include _include(APP_PATH.'view/htm/thread_list_mod.inc.htm');?>
+		
+		<?php if($pagination) { ?>
+		<nav><ul class="pagination justify-content-center"><?php echo $pagination; ?></ul></nav>
+		<?php } ?>
+		
+		<!--{hook user_thread_list_end.htm}-->
+	</slot>
+</template>
+
+<script>
+$('li[data-active="menu-user-thread"]').append('<span class="tip"></span>');
+</script>
+
+<!--{hook user_thread_js.htm}-->

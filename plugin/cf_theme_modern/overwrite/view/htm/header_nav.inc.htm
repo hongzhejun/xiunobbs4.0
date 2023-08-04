@@ -1,0 +1,189 @@
+<!-- Plugin Name : cf_theme_modern v<?php echo $cfver;?> -->
+<div id="app" class="App affix is-outer wrapper0 App--index " >
+  <div id="app-navigation" class="App-navigation">
+     <div class="Navigation ButtonGroup App-backControl">
+      <?php if(! empty($tid)) { ?>
+      <a class="Button Navigation-back Button--hasIcon" href="<?php echo url("forum-$fid");?>" title="<?php echo lang('back').lang('thread_list');?>">
+      <i class="icon fas fa-chevron-left Button-icon"></i><span class="Button-label"></span></a>
+      <?php } else { ?>
+      <button class="Button Button--Navigation-drawer <?php if(!empty($uid)){echo $user['unread_notices'] !=0 ? 'new':'';} ?> hasIcon" type="button" title="" id="nav-bars">
+      <i class="icon fas fa-bars Button-icon"></i><span class="Button-label"></span></button>
+      <?php } ?>
+     </div>
+  </div>
+  <div id="drawer" class="App-drawer">
+    <!--{hook header_nav_start.htm}-->
+    <header id="header" class="App-header navbar-fixed-top">
+      <div id="header-navigation" class="Header-navigation">
+        <div class="Navigation ButtonGroup "></div>
+      </div>
+      <div class="container">
+        <!--{hook header_nav_logo_before.htm}-->
+        <div class="Header-title">
+          <a href="/" id="home-link">
+          <?php if(isset($cf_theme_modern['logo_url']) && $cf_theme_modern['logo_url']) { ?>
+          <img src="<?php echo $cf_theme_modern['logo_url'];?>" alt="<?php echo $conf['sitename'];?>" class="Header-logo">
+          <?php } else { ?>
+          <img src="<?php echo $conf['logo_pc_url'];?>" alt="<?php echo $conf['sitename'];?>" class="Header-logo">
+          <?php } ?>
+          </a>
+        </div>
+        <!--{hook header_nav_logo_after.htm}-->
+          <div id="header-primary" class="Header-primary hidden-sm">
+            <ul class="Header-controls">
+              <li class="li_index">
+                <a class="" href="." title="<?php echo lang('index_page');?>"><?php echo lang('index_page');?></a>
+              </li>
+              <!--{hook header_nav_forum_start.htm}-->
+              <li class="li_forum">
+                <a class="bind_menu_a" href="#" data-layerid="layer1"><?php echo lang('forum');?></a>
+              </li>
+              <!--{hook header_nav_home_link_after.htm}-->
+              <!--{hook header_nav_forum_end.htm}-->
+            </ul>
+            <div class="sub_menu bind_menu_a" id="layer1" data-layerid="layer1" style="display: none;">
+              <i></i>
+              <div class="sub_area">
+              <?php foreach($forumlist_show as $_forum) { ?>
+              <!--{hook header_nav_forumlist_loop_start.htm}-->
+                <ul class="sub_nav list">
+                  <li class="li_forum"><a href="<?php echo url("forum-$_forum[fid]");?>">
+                  <img src="<?php echo $_forum['icon_url'];?>" alt>
+                  <span><?php echo $_forum['name'];?></span>
+                    </a></li>
+                </ul>
+                <!--{hook header_nav_forumlist_loop_end.htm}-->
+                <?php } ?>
+              </div>
+            </div>
+          </div>
+          <div id="header-secondary" class="Header-secondary">
+            <ul class="Header-controls">
+              <!--{hook header_nav_user_start.htm}-->
+              <?php if(empty($uid)) { ?>
+              <li class="item-signUp">
+                <a class="LinksButton Button Button--link" href="<?php echo url('user-create');?>" title="<?php echo lang('register');?>">
+                  <span class="Button-label"><?php echo lang('register');?></span>
+                </a>
+              </li>
+              <li class="item-logIn">
+                <a class="LinksButton Button Button--link" href="<?php echo url('user-login');?>" title="<?php echo lang('login');?>">
+                  <span class="Button-label"><?php echo lang('login');?></span>
+                </a>
+              </li>
+              <?php } else { ?>
+              <li class="item-session">
+               <div class="ButtonGroup Dropdown dropdown SessionDropdown">
+                <button class="Dropdown-toggle Button Button--user Button--flat" data-toggle="dropdown" aria-expanded="false">
+                  <img class="Avatar " src="<?php echo $user['avatar_url'];?>" alt="<?php echo lang('modify_avatar');?>">
+                  <span class="Button-label">
+                    <span class="username"><?php echo $user['username'];?></span>
+                  </span>
+                </button>
+                <ul class="Dropdown-menu dropdown-menu Dropdown-menu--right">
+                 <li class="item-profile"><a href="<?php echo url("user-$uid");?>" title="<?php echo lang('user_homepage');?>" class="hasIcon"><i class="icon fas fa-user Button-icon"></i><span class="Button-label"><?php echo lang('user_homepage');?></span></a></li>
+                 <li class="item-settings"><a href="<?php echo url('my');?>" title="<?php echo lang('my_home');?>" class="hasIcon"><i class="icon fas fa-user-cog Button-icon"></i><span class="Button-label"><?php echo lang('my_home');?></span></a></li>
+                 <!-- admin -->
+                 <?php if($gid == 1) { ?>
+                 <li class="item-admin"><a href="admin/" title="<?php echo lang('admin_page');?>" class="hasIcon"><i class="icon fas fa-home Button-icon"></i><span class="Button-label"><?php echo lang('admin_page');?></span></a></li>
+                 <?php } ?>
+                 <!--{hook header_nav_admin_page_after.htm}-->
+                 <li class="Dropdown-separator"></li>
+                 <li class="item-logOut">
+                  <form name='form_logout' action="<?php echo url('user-logout');?>" method='post'></form>
+                  <a href="javascript:document.form_logout.submit();" title="<?php echo lang('logout');?>" class="hasIcon"><i class="icon fas fa-sign-out-alt Button-icon"></i><span class="Button-label"><?php echo lang('logout');?></span></a>
+                 </li>
+                </ul>
+               </div>
+              </li>
+              <?php } ?>
+              <!--{hook header_nav_user_end.htm}-->
+            </ul>
+          </div>
+      </div>
+    </header>
+    <!--{hook header_nav_end.htm}-->
+  </div>
+  <div class="App-content"> 
+   <div id="content" style="padding-bottom: 0px;">
+    <div class="IndexPage">
+     <div class="container">
+      <div class="sideNavContainer">
+       <nav class="IndexPage-nav sideNav">
+        <div>
+         <div class="App-primaryControl item-newDiscussion">
+          <a class="Button Button--primary IndexPage-newDiscussion hasIcon" href="<?php echo url('thread-create-'.$fid);?>" title="<?php echo lang('thread_create');?>">
+          <i class="icon fas fa-edit Button-icon"></i>
+          <span class="Button-label"><?php echo lang('thread_create');?></span></a>
+         </div>
+         <div class="item-nav">
+          <div class="ButtonGroup Dropdown dropdown App-titleControl Dropdown--select ">
+           <button class="Dropdown-toggle Button" data-toggle="dropdown" id="Button-Discussions"><span class="Button-label item-nav-title">
+           <?php
+           if(empty($forum['name'])) {
+           echo '<i class="icon fa fa-house Button-caret mr-2"></i>';
+           echo lang('index_page');
+           } else {
+           echo '<img class="mr-2" width="16px" src="'.$forum['icon_url'].'" alt>';
+           echo $forum['name'];
+           } ?>
+           </span><i class="icon fas fa-sort Button-caret"></i></button>
+           <ul class="Dropdown-menu dropdown-menu " style="position: absolute;transform: translate3d(0px, 5px, 0px);top: 0px;left: 0px;will-change: transform;">
+            <li class="item-allDiscussions">
+              <a href="/" title="<?php echo lang('index_page');?>" class="hasIcon">
+              <i class="icon fa fa-house Button-icon"></i><span class="Button-label"><?php echo lang('index_page');?></span></a>
+            </li>
+            <li class="Dropdown-separator"></li>
+            <?php if (isset($route) && $route == 'my') { ?>
+            <!--{hook header_nav_my_loop_start.htm}-->
+            <li class="item-Discussions" data-active="nav-menu-my">
+              <a class="TagLinkButton hasIcon" href="<?php echo url('my');?>" title="<?php echo lang('my_profile');?>">
+              <i class="icon fas fa-user-edit Button-icon"></i><span class="Button-label"><?php echo lang('my_profile');?></span></a>
+            </li>
+            <!--{hook header_nav_my_after.htm}-->
+            <li class="item-Discussions" data-active="nav-menu-my-thread">
+              <a class="TagLinkButton hasIcon" href="<?php echo url('my-thread');?>" title="<?php echo lang('my_threads');?>">
+              <i class="icon fas fa-hashtag Button-icon"></i><span class="Button-label"><?php echo lang('my_threads');?></span></a>
+            </li>
+            <!--{hook header_nav_my_thread_after.htm}-->
+            <!--{hook header_nav_my_loop_end.htm}-->
+            <?php } elseif (isset($route) && $route == 'user' && !empty($_uid)) { ?>
+            <!--{hook header_nav_user_loop_start.htm}-->
+            <li class="item-Discussions" data-active="nav-menu-user">
+              <a class="TagLinkButton hasIcon" href="<?php echo url("user-$_uid");?>" title="<?php echo lang('his').lang('homepage');?>">
+              <i class="icon fas fa-user Button-icon"></i><span class="Button-label"><?php echo lang('his').lang('homepage');?></span></a>
+            </li>
+            <!--{hook header_nav_user_after.htm}-->
+            <li class="item-Discussions" data-active="nav-menu-user-thread">
+              <a class="TagLinkButton hasIcon" href="<?php echo url("user-thread-$_uid");?>" title="<?php echo lang('his').lang('thread');?>">
+              <i class="icon fas fa-hashtag Button-icon"></i><span class="Button-label"><?php echo lang('his').lang('thread');?></span></a>
+            </li>
+            <!--{hook header_nav_user_thread_after.htm}-->
+            <li class="item-Discussions" data-active="nav-menu-user-post">
+              <a class="TagLinkButton hasIcon" href="<?php echo url("user-post-$_uid");?>" title="<?php echo lang('his').lang('post');?>">
+              <i class="icon fas fa-comments Button-icon"></i><span class="Button-label"><?php echo lang('his').lang('post');?></span></a>
+            </li>
+            <!--{hook header_nav_user_post_after.htm}-->
+            <!--{hook header_nav_user_loop_end.htm}-->
+            <?php } else { ?>
+            <?php foreach($forumlist_show as $_forum) { ?>
+            <!--{hook header_nav_forumlist_loop_start.htm}-->
+            <li class="item-Discussions" fid="<?php echo $_forum['fid'];?>" data-active="fid-<?php echo $_forum['fid'];?>">
+              <a class="TagLinkButton hasIcon" href="<?php echo url("forum-$_forum[fid]");?>" title="<?php echo $_forum['name'];?>">
+              <i class="icon Button-icon"><img width="16px" src="<?php echo $_forum['icon_url'];?>" alt></i>
+              <span class="Button-label"><?php echo $_forum['name'];?></span></a>
+            </li>
+            <!--{hook header_nav_forumlist_loop_end.htm}-->
+            <?php } } ?>
+           </ul>
+          </div>
+         </div>
+         
+        </div>
+       </nav>
+      </div>
+     </div>
+    </div>
+   </div>
+  </div>
+</div>

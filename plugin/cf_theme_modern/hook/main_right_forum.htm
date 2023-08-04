@@ -1,0 +1,36 @@
+<div class="main_right_bottom module_box main_right_forum hidden-sm">
+   <div class="main_right_item">
+    <p class="title"><span class="icon fas fa-th-large"></span> <?php echo lang('forum');?></p>
+    <li class="nav-item more">
+      <div class="dropdown">
+        <a class="LinksButton Button Button--link" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <?php echo lang('ver_todos');?> &gt;
+        </a>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+        <?php foreach($forumlist_show as $_forum) { ?>
+        <!--{hook header_nav_forumlist_loop_start.htm}-->
+        <a class="dropdown-item" href="<?php echo url("forum-$_forum[fid]");?>" title="<?php echo $_forum['name'];?>">
+        <img src="<?php echo $_forum['icon_url'];?>" width="14px" alt>
+        <span class="Button-label"><?php echo $_forum['name'];?></span></a>
+        <!--{hook header_nav_forumlist_loop_end.htm}-->
+        <?php } ?>
+        </div>
+      </div>
+    </li>
+   </div>
+   <ul class="box_ul">
+    <?php 
+    $_forumNum = 0;
+    foreach($forumlist_show as $_forum) {
+    if ($_forumNum < 6) {
+    ?>
+    <li>
+    <a href="<?php echo url("forum-$_forum[fid]");?>" title="<?php echo $_forum['name'];?>">
+    <img src="<?php echo $_forum['icon_url'];?>" alt><span><?php echo $_forum['name'];?></span>
+    </a>
+    </li>
+    <?php
+    $_forumNum = $_forumNum + 1;
+    } } ?>
+   </ul>
+  </div>

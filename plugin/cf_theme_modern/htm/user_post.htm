@@ -1,0 +1,22 @@
+<template include="./plugin/cf_theme_modern/htm/user_post.template.htm">
+	<slot name="user_body">
+    
+    <!--{hook user_post_list_start.htm}-->
+    
+		<ul class="list-unstyled postlist" style="padding: 0 20px;">
+			<?php include _include(APP_PATH.'plugin/cf_theme_modern/htm/post_list.inc.htm'); ?>
+		</ul>
+		
+		<?php if($pagination) { ?>
+		<nav><ul class="pagination justify-content-center"><?php echo $pagination; ?></ul></nav>
+		<?php } ?>
+		
+		<!--{hook user_post_list_end.htm}-->
+	</slot>
+</template>
+
+<script>
+$('li[data-active="menu-user-post"]').append('<span class="tip"></span>');
+</script>
+
+<!--{hook user_post_js.htm}-->

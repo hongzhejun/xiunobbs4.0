@@ -1,0 +1,60 @@
+<?php include _include(ADMIN_PATH.'view/htm/header.inc.htm');?>
+<div class="row">
+		<div class="col-12">
+		<div class="btn-group mb-3" role="group">
+             <a class="btn btn-secondary" href="<?php echo url("plugin");?>">本地插件</a>
+             <a class="btn btn-secondary active" href="<?php echo url("plugin-setting-nt_theme_brief");?>">插件设置</a>
+         </div>
+         <div class="card">
+			<div class="card-body">
+				<form action="<?php echo url("plugin-setting-nt_theme_brief");?>" method="post" id="form">
+				<div class="form-group row">
+                     <div class="col-sm-12">
+				     <div class="input-group-prepend">
+                          <span class="input-group-text">顶栏透明度：</span>
+							 <?php echo $input['transparence'];?>
+					</div>
+					</div>
+				</div>
+			    <div class="form-group row">
+                     <div class="col-sm-12">
+				     <div class="input-group-prepend">
+                          <span class="input-group-text">服务条款地址：</span>
+							 <?php echo $input['agreebbrule'];?>
+					</div>
+					</div>
+				</div>
+					<div class="form-group row">
+						<label class="col-sm-2 form-control-label"></label>
+						<div class="col-sm-12">
+							<button type="submit" class="btn btn-primary btn-block" id="submit" data-loading-text="<?php echo lang('submiting');?>..."><?php echo lang('confirm');?></button>
+						</div>
+					</div>
+				</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+<?php include _include(ADMIN_PATH.'view/htm/footer.inc.htm');?>
+<script>
+var jform = $("#form");
+var jsubmit = $("#submit");
+var referer = '<?php echo http_referer();?>';
+jform.on('submit', function(){
+	jform.reset();
+	jsubmit.button('loading');
+    var postdata = jform.serialize();
+	$.xpost(jform.attr('action'), postdata, function(code, message) {
+		if(code == 0) {
+			$.alert(message);
+			jsubmit.text(message).delay(2000).button('reset').location(xn.url('plugin-setting-nt_theme_brief'));
+			return;
+		} else {
+			$.alert(message);
+			jsubmit.button('reset');
+		}
+	});
+	return false;
+});
+</script>

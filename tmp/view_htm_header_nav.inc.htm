@@ -1,0 +1,344 @@
+
+<header id="header">
+
+	<!-- PC Navigation start -->
+	<div class="navbar navbar-light navbar-expand-lg hidden-sm hidden-md" style="background-color: rgba(255, 255, 255, <?php $notich = kv_get('nt_theme_brief'); echo $notich['transparence'];?>">
+		<div class="container" id="pc_nav">
+			<!-- PC: logo -->
+			
+			<a class="navbar-brand text-truncate" href="<?php echo $header['mobile_link'];?>">
+				<img src="<?php echo $conf['logo_pc_url'];?>" class="logo-2">
+			</a>
+			
+
+			<!-- PC: 左侧：主要导航菜单 -->
+			<ul class="navbar-nav mr-auto">
+				
+				<li class="nav-item home" data-active="index">
+				    <a class="nav-link" href=".">
+				        <i class="fas fa-home"></i>
+						<?php echo lang('index_page');?>
+					</a>
+				</li>
+				<div class="dropdown hidden-sm hidden-md">
+                    <li class="nav-item" id="dropdownMenuButton" data-toggle="dropdown" aria-expanded="false" style="cursor:pointer;">
+                        <a class="nav-link dropdown-toggle" >
+                            <i class="fas fa-layer-group"></i>
+                            <?php echo lang('catalog');?>
+                        </a>
+                    </li>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <?php foreach($forumlist_show as $_forum) { ?>
+                            <li fid="<?php echo $_forum['fid'];?>" data-active="fid-<?php echo $_forum['fid'];?>">
+                                <a class="dropdown-item" href="<?php echo url("forum-$_forum[fid]");?>">
+                                    <img class="avatar-1 mr-1 rounded" src="<?php echo $_forum['icon_url'];?>"> 
+                                    <?php echo $_forum['name'];?>
+                                </a>
+                            </li>
+               	        <?php } ?>
+                 	</div>
+                </div>
+				
+                <div class="form-group nav-item hidden-sm hidden-md ml-4" style="margin-top: 10px;">
+                    <form action="<?php echo url('search');?>" id="search_form">
+		                <div class="input-group">
+			                <input type="text" class="form-control border-0" style="background-color: var(--light);" placeholder="关键词" name="keyword" autocomplete="off">
+		    	        <div class="input-group-append">
+				             <button class="btn btn-light" type="submit">
+				                 <span class="iconfont icon-sousuo1"></span>
+				             </button>
+			            </div>
+			            </div>
+	                </form>
+		        </div>
+			</ul>
+
+			<!-- PC: 右侧：用户 -->
+			<ul class="navbar-nav">
+				
+	            <li class="nav-item">
+	                <a class="nav-link" href="<?php echo url('search');?>">
+	                    <span class="iconfont icon-sousuo1" data-toggle="tooltip" data-placement="top" title="搜索"></span> 
+	                    <span class="hidden-lg">搜索</span>
+	                </a>
+                </li>
+				<?php if(empty($uid)) { ?>
+				
+				<li class="nav-item"><a class="nav-link" href="<?php echo url('user-login');?>">
+					<?php echo lang('login');?>/<?php echo lang('register');?></a>
+				</li>
+				
+				<?php } else { ?>
+				<li class="nav-item usernotice <?php echo $user['unread_notices'] !=0 ? 'current':''; ?>" id="nav-usernotice" data-active="nav-usernotice">
+		            <a class="nav-link" href="<?php echo url('my-notice');?>">
+		                <span class="iconfont icon-xiaoxi" data-toggle="tooltip" data-placement="top" title="消息"></span> 
+		                <span class="hidden-lg">消息</span> 
+		                <span class="d-none unread badge badge-danger badge-pill" id="nav-usernotice-unread-notices"><?php echo $user['unread_notices']; ?></span>
+		            </a>
+	            </li>
+
+
+			    <li class="nav-item">
+					<a class="nav-link" href="<?php echo url('thread-create-'.$fid);?>">
+					    <span class="iconfont icon-bianji" data-toggle="tooltip" data-placement="top" title="发新帖"></span>
+					</a>
+				</li>
+				<div class="dropdown ">
+					<li class="nav-item username">
+						<a class="nav-link" id="profileDropdown" data-toggle="dropdown" href="#">
+						    <img class="avatar-2 header_dropdown" src="<?php echo $user['avatar_url'];?>">
+						</a>
+
+						<div class="top-user-box-drop jt b2-radius">
+							<div class="top-user-info-box">
+								<div class="top-user-info-box-name">
+									<img src="<?php echo $user['avatar_url'];?>" class="avatar rounded b2-radius">
+									<div class="top-user-name">
+										<h2><?php echo $user['username'];?></h2> 
+							            
+										<div>
+											<div>
+												<span class="badge badge-pill badge-primary"><?php echo lang('user_uid');?>:<?php echo $user['uid'];?></span>
+												<span class="badge badge-pill badge-info"><?php echo $user['groupname'];?></span>
+											</div>
+										</div>
+									</div>
+									<a href="<?php echo url('user-logout');?>" target="_blank" class="link-block"></a>
+									    <div data-title="<?php echo lang('logout');?>" class="login-out user-tips">
+									        <a href="<?php echo url('user-logout');?>">
+									            <i class="fas fa-sign-out-alt"></i>
+									        </a>
+									    </div>
+								</div>
+                                <?php $no_cache_user = user_read($uid);$progress=100; $max=1; $now=$no_cache_user['credits'];if($no_cache_user['gid']>100){foreach($grouplist as $group) {if($group['gid'] < 100) continue;$n = $no_cache_user['credits'] ;if($n > $group['creditsfrom'] && $n <= $group['creditsto']) {$max=$group['creditsto'];if($no_cache_user['groupname']!=$group['name']) {$no_cache_user['groupname']=$group['name'];user_update_group($uid);}break;}}$progress = (int)($now/$max * 100.0);}?>
+								<div class="top-user-info-box-count">
+								    <p>
+								        <span><?php echo lang('threads');?></span>
+								        <b><?php echo $user['threads'];?></b>
+								    </p> 
+								    <p>
+								        <span><?php echo lang('posts');?></span>
+								        <b><?php echo $user['posts'];?></b>
+								    </p>
+								    <p>
+								        <span><?php echo lang('credits2');?></span>
+								        <b><?php echo $no_cache_user['golds'];?></b>
+								    </p>
+								    <p>
+								        <span><?php echo lang('credits3');?></span>
+								        <b><?php echo $no_cache_user['rmbs']/100.0;?></b>
+								    </p>
+							    </div>
+							</div>
+							<ul>
+								<li>
+								    <a href="<?php echo url('my-thread');?>">
+								        <i class="far fa-comment-alt"></i>
+								        <p>我的帖子<span class="top-user-link-des">我发布的主题</span></p>
+								    </a>
+								</li>
+								<li>
+								    <a href="<?php echo url('my-purchased');?>">
+								        <i class="icon-jpy"></i>
+								        <p>我的购买<span class="top-user-link-des">我购买的主题</span></p>
+								    </a>
+								</li>
+								<li>
+								    <a href="<?php echo url('my-credits');?>">
+								        <i class="far fa-gem"></i>
+								        <p>余额管理<span class="top-user-link-des">查看我的余额</span></p>
+								    </a>
+								</li>
+								<li>
+								    <a href="<?php echo url('my');?>">
+								        <i class="far fa-user-circle"></i>
+								        <p>个人中心<span class="top-user-link-des">我的个人中心</span></p>
+								    </a>
+								</li>
+								<?php if($gid == 1) { ?>
+								<li>
+								    <a href="admin/" target="_blank">
+								        <i class="fa fa-cog"></i>
+								        <p>后台管理<span class="top-user-link-des">管理站点配置</span></p>
+								    </a>
+								</li>
+								<?php } ?>
+							</ul>
+						</div>
+
+					</li>
+					
+				</div>
+				<?php } ?>
+			</ul>
+		</div>
+
+	</div>
+						
+	<!-- PC Navigation end -->
+
+
+<!-- Mobile Navigation start -->
+	<div class="navbar navbar-light  navbar-expand-lg  hidden-lg" style="background-color: rgba(255, 255, 255, <?php $notich = kv_get('nt_theme_brief'); echo $notich['transparence'];?>);">
+		<div class="container" id="mobile_nav">
+
+			<!-- 左侧：菜单按钮 -->
+			
+			<span class="fa fa-bars MobilemenuBtn js-sidebar--open MobilemenuBtn-text" aria-label="展开菜单"></span>
+			
+			<!-- 中间的 LOGO、网站标题 -->
+			<a class="navbar-brand text-truncate" href="./">
+				<img src="<?php echo $conf['logo_mobile_url'];?>" class="logo-2">
+			</a>
+			
+
+			<!-- 右侧的用户登录、发帖图标 -->
+			<?php if(empty($uid)) { ?>
+			<a class="navbar-brand nav-dark MobilemenuBtn-text" href="<?php echo url('user-login');?>"aria-label="登录">
+			    <i class="far fa-user-circle"></i>
+			</a>
+			<?php } else { ?>
+	    	<a class="navbar-brand nav-dark MobilemenuBtn-text" href="<?php echo url('thread-create-'.$fid);?>" aria-label="发表主题">
+	    	    <i class="far fa-edit"></i>
+	    	</a>
+			<?php } ?>
+
+		</div>
+	</div>
+	<!-- Mobile Navigation end -->
+	<!--侧边栏菜单-->
+	<aside class="js-sidebar">
+		<div class="js-sidebar--container col-12 bg-light">
+		    <?php if(empty($uid)) { ?>
+			<div class="sidebar--title py-4">
+				<div class="media">
+					<a class="mr-3" href="<?php echo url('user-login');?>">
+					    <img class="avatar-3" src="plugin/nt_theme_brief/view/img/avatar.png" style="width: 3.5rem;height: 3.5rem;">
+					</a>
+				    <div class="media-body">
+				        <a href="<?php echo url('user-login');?>">
+				        <span class="h5">登录/注册</span>
+				            <div class="mt-2">
+				                <span>登录/注册,发现更多精彩！</span>
+				            </div>  
+			            </a>
+				    </div>
+				</div>
+			</div>
+			<?php } else { ?>
+            <div class="sidebar--title py-4">
+				<div class="media">
+					<a class="mr-3" href="<?php echo url('my');?>">
+					    <img class="avatar-3" src="<?php echo $user['avatar_url'];?>" style="width: 3.5rem;height: 3.5rem;">
+					</a>
+				    <div class="media-body">
+						<span class="h5"><?php echo $user['username'];?></span>
+						<div class="mt-2">
+							<a href="<?php echo url('my');?>">
+						    <span class="badge badge-pill badge-primary">UID:<?php echo $user['uid'];?></span>
+						    <span class="badge badge-pill badge-info ml-1"><?php echo $user['groupname'];?></span>
+					        </a>
+						</div>  
+					</div>
+				</div>
+			</div>
+			<?php } ?>
+			<div class="form-group nav-item hidden-lg ">
+	            <form action="<?php echo url('search');?>" id="search_form" >
+		        <div class="input-group">
+		        	<input type="text" class="form-control border-0" style="background-color: var(--white);" placeholder="关键词" name="keyword" autocomplete="off">
+			        <div class="input-group-append">
+				    <button class="btn btn-light" type="submit">
+				        <span class="iconfont icon-sousuo1"></span>
+				    </button>
+			    </div>
+		</div>
+	            </form>
+            </div>
+		    <div class="sidebar_menu">
+			<div class="nav flex-column sidebar--nav nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+				<div class="card">
+					<div class="card-body">
+					    
+					    <li class="nav-item home" data-active="index">
+						    <a class="nav-link" href="./" data-active="index"><i class="iconfont icon-shouye"></i> 首页</a>
+					    </li>
+					    
+                        <div class="form-group nav-item hidden-sm hidden-md ml-4" style="margin-top: 10px;">
+	                        <form action="<?php echo url('search');?>" id="search_form">
+		                        <div class="input-group">
+			                        <input type="text" class="form-control border-0" style="background-color: var(--light);" placeholder="关键词" name="keyword" autocomplete="off">
+			                            <div class="input-group-append">
+				                            <button class="btn btn-light" type="submit">
+				                                <span class="iconfont icon-sousuo1"></span>
+				                            </button>
+			                            </div>
+	                        	</div>
+	                        </form>
+                        </div>
+				    </div>
+			    </div>
+				
+			    <div class="my_option card">
+				    <div class="card-body">	
+						<li class="nav-item">
+                            
+				            
+				            
+	                        <a class="nav-link" href="<?php echo url('search');?>">
+	                            <span class="iconfont icon-sousuo1" data-toggle="tooltip" data-placement="top" title="搜索"></span>
+	                            <span class="hidden-lg">搜索</span>
+	                        </a>
+		                    <?php if ($uid)  { ?>
+	                        <li class="nav-item usernotice <?php echo $user['unread_notices'] !=0 ? 'current':''; ?>" id="nav-usernotice" data-active="nav-usernotice">
+	                        <a class="nav-link" href="<?php echo url('my-notice');?>">
+	                            <span class="iconfont icon-xiaoxi" data-toggle="tooltip" data-placement="top" title="消息"></span>
+	                            <span class="hidden-lg">消息</span>
+		                        <span class="d-none unread badge badge-danger badge-pill" id="nav-usernotice-unread-notices"><?php echo $user['unread_notices']; ?></span>
+	                        </a>
+	                        </li>
+			                <?php } ?>
+				            <!-- 管理员 -->
+			                <?php if($gid == 1) { ?>
+			                <a class="nav-link" href="admin/" target="_blank">
+			                    <span class="fa fa-cog"data-toggle="tooltip" data-placement="top" title="后台管理"></span>
+								<span class="hidden-lg"><?php echo lang('admin_page');?></span>
+							</a>
+							<?php } ?>	
+						</li>
+
+			        </div>
+				</div>
+					
+			</div>
+				
+		    </div>
+		    <div class="sidebar_forumList card">
+		    	<div class="card-body p-1">
+				    <div class="nav navbar-nav forumlist px-4">
+					    <div class="row">
+					        <?php foreach($forumlist_show as $_forum) { ?>
+					        <li class="nav-item col-6 p-1" fid="<?php echo $_forum['fid'];?>" data-active="fid-<?php echo $_forum['fid'];?>">
+						    <a class="nav-link py-2 rounded small forumlist-bg mr-0" href="forum-<?php echo $_forum['fid'];?>.htm">
+							    <div class="text-center">
+							        <img class="avatar-1 mr-1 rounded" src="<?php echo $_forum['icon_url'];?>">
+								    <span><?php echo $_forum['name'];?></span>
+						        </div>
+					     	</a>
+					        </li>
+							<?php } ?>
+											
+						</div>
+			    </div>
+		</div>
+			</div>
+		    <?php if ($uid)  { ?>
+			<a class="btn btn-danger mb-3" href="<?php echo url('user-logout');?>">
+			    <i class="fa fa-sign-out-alt"></i>
+			</a>
+			<?php }  ?>
+		</div>
+	</div>
+	<div class="js-sidebar--background"></div>
+	</aside>
+</header>

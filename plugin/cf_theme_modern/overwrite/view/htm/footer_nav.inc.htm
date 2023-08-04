@@ -1,0 +1,27 @@
+<?php $cf_theme_modern=kv_get('cf_theme_modern');?>
+<link rel="stylesheet" href="/plugin/cf_theme_modern/css/footer.min.css?<?php echo $cfver;?>">
+<footer class="footerdiv" id="footer">
+  <center><br>
+    <h4 class="aboutinfo" font-weight="lighter">
+      <!--{hook footer_footer_left_start.htm}-->
+      <?php if(isset($cf_theme_modern['footer_top']) && $cf_theme_modern['footer_top']) { echo $cf_theme_modern['footer_top'];} ?>
+      <!--{hook footer_footer_left_end.htm}-->
+      <br>
+      <?php if(isset($cf_theme_modern['ShowXiuno']) && $cf_theme_modern['ShowXiuno']) {
+      if(!empty($cf_theme_modern['powered_by'])){
+        echo 'Powered by <span class="by-xiuno">'.$cf_theme_modern['powered_by'].'</span>';
+      }else{
+        echo 'Powered by <span class="by-xiuno">Xiuno</span>';
+      } } ?>
+      <?php if(($cf_theme_modern['ShowXiuno']=='1') && ($cf_theme_modern['ShowProcessed']=='1')) { echo "|"; } ?>
+      <?php if(isset($cf_theme_modern['ShowProcessed']) && $cf_theme_modern['ShowProcessed']) { ?>
+				Processed: <?php echo substr(microtime(1) - $starttime, 0, 5);?>, SQL: <?php echo count($db->sqls);?>
+			<?php } ?>
+    </h4>
+    <!--{hook footer_footer_right_start.htm}-->
+		<?php if(isset($cf_theme_modern['footer_down']) && $cf_theme_modern['footer_down']) { echo $cf_theme_modern['footer_down'];} ?>
+		<!--{hook footer_footer_right_end.htm}-->
+	<br></center>
+</footer>
+<script src="/plugin/cf_theme_modern/js/cf.js?<?php echo $cfver;?>"></script>
+<script src="/plugin/cf_theme_modern/js/f.js?<?php echo $cfver;?>"></script>

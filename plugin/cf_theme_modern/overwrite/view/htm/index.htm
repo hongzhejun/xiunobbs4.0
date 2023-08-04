@@ -1,0 +1,90 @@
+<?php include _include(APP_PATH.'view/htm/header.inc.htm');?>
+
+<!--{hook index_start.htm}-->
+
+<div class="row">
+	<div class="col-lg-9 main">
+		<!--{hook index_main_start.htm}-->
+		<div class="card card-threadlist">
+			<div class="box_title">
+				<ul class="nav_type" style="margin-top: 16px;">
+					<li class="<?php echo $active == 'default' ? 'activeNav' : '';?>">
+					<a class="redNav" href="./<?php echo url("$route");?>"><?php echo lang('new_thread');?></a>
+					</li>
+					<!--{hook index_thread_list_nav_item_after.htm}-->
+				</ul>
+			</div>
+			<!--{hook index_threadlist_card_before.htm}-->
+			<div class="card-body" style="padding-top: 0px;padding-left:0px;padding-right:0px;padding:0px">
+				<ul class="list-unstyled threadlist mb-0">
+					<!--{hook index_threadlist_before.htm}-->
+					<?php include _include(APP_PATH.'view/htm/thread_list.inc.htm');?>
+					<!--{hook index_threadlist_after.htm}-->
+				</ul>
+			</div>
+			<!--{hook index_threadlist_card_after.htm}-->
+		</div>
+		
+		<?php include _include(APP_PATH.'view/htm/thread_list_mod.inc.htm');?>
+		
+		<!--{hook index_page_before.htm}-->
+		<nav class="my-3"><ul class="pagination justify-content-center flex-wrap"><?php echo $pagination; ?></ul></nav>
+		<!--{hook index_page_end.htm}-->
+	</div>
+	<div class="col-lg-3 d-none d-lg-block aside">
+	<!--{hook index_site_thread_create_new_before.htm}-->
+	<div class="main_right_top module_box"><a class="button" href="<?php echo url('thread-create-'.$fid);?>">
+      <i class="icon fas fa-edit Button-icon"></i><?php echo lang('thread_create_new');?></a>
+    </div>
+	<!--{hook index_site_brief_before.htm}-->
+	<div class="main_right_bottom module_box main_right_forum hidden-sm">
+		<!--{hook index_site_brief_start.htm}-->
+		<div class="main_right_item">
+			<p class="title"><span class="icon fas fa-server"></span> <?php echo lang('site_info');?></p>
+		</div>
+		<div class="line-height-3 cfhr"><?php echo $conf['sitebrief'];?></div>
+		<div class="m-2 cfli">
+			<ul>
+				<li>
+					<i class="icon fas fa-hashtag cficon"></i><br>
+					<span class="text-muted"><?php echo lang('threads');?></span>
+					<span style="display:block;"><?php echo $runtime['threads'];?></span>
+					<span class="text-muted"><?php echo lang('today_threads');?></span>
+					<span style="display:block;"><?php echo $runtime['todaythreads'];?></span>
+				</li>
+				<li>
+					<i class="icon far fa-comments cficon"></i><br>
+					<span class="text-muted"><?php echo lang('posts');?></span>
+					<span style="display:block;"><?php echo $runtime['posts'];?></span>
+					<span class="text-muted"><?php echo lang('today_posts');?></span>
+					<span style="display:block;"><?php echo $runtime['todayposts'];?></span>
+				</li>
+				<li>
+					<span class="icon fa fa-house-user cficon"></span><br>
+					<span class="text-muted"><?php echo lang('users');?></span>
+					<span style="display:block;"><?php echo $runtime['users'];?></span>
+					<?php if($runtime['onlines'] > 0) { ?>
+					<span class="text-muted"><?php echo lang('online');?></span>
+					<span style="display:block;"><?php echo $runtime['onlines'];?></span>
+					<?php } ?>
+				</li>
+			</ul>
+		</div>
+		<!--{hook index_site_brief_end.htm}-->
+	</div>
+		<!--{hook index_site_brief_after.htm}-->
+		<!--{hook main_right_forum.htm}-->
+		<!--{hook main_right_image.htm}-->
+		<!--{hook index_main_right_end.htm}-->
+	</div>
+</div>
+
+<!--{hook index_end.htm}-->
+
+<?php include _include(APP_PATH.'view/htm/footer.inc.htm');?>
+
+<script>
+$(".item-allDiscussions").addClass("active");
+</script>
+
+<!--{hook index_js.htm}-->

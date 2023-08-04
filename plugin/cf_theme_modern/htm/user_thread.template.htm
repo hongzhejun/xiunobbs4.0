@@ -1,0 +1,27 @@
+<template include="./plugin/cf_theme_modern/htm/user.common.template.htm">
+	<slot name="user_nav">
+		<ul class="nav">
+			<!--{hook user_nav_thread_before.htm}-->
+			<li data-active="menu-user-thread"><?php echo lang('his').lang('thread').'('.$_user['threads'].')';?></li>
+			<!--{hook user_nav_thread_after.htm}-->
+			<!--{hook user_nav_post_before.htm}-->
+      <li data-active="menu-user-post"><?php echo lang('his').lang('post').'('.$_user['posts'].')';?></li>
+      <!--{hook user_nav_post_after.htm}-->
+		</ul>
+	</slot>
+</template>
+
+<script>
+$('li[data-active="nav-menu-user-thread"]').addClass('active');
+$('li[data-active="menu-user-thread"]').addClass('activeNav');
+$(".item-nav-title").text("<?php echo lang('his').lang('thread');?>");
+</script>
+<?php
+echo '<script>$(\'li[data-active="menu-user-thread"]\').click(function(){'.
+'location.href="'.url("user-thread-$_uid").'";'.
+'});$(\'li[data-active="menu-user-post"]\').click(function(){'.
+'location.href="'.url("user-post-$_uid").'";'.
+'})</script>';
+?>
+
+<!--{hook user_nav_thread_js.htm}-->

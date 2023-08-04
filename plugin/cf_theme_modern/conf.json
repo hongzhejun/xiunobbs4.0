@@ -1,0 +1,19 @@
+{
+    "name": "云库论坛定制主题",
+    "brief": "<span class='badge badge-danger'><a href='https://cloudatabases.com' class='text-warning' target='_blank'>云库论坛定制主题</a></span><br><a href='https://cloudatabases.com/thread-54.htm' target='_blank'>前台介绍</a>、<a href='https://cloudatabases.com/thread-53.htm' target='_blank'>后台介绍</a><br><br><span class='badge badge-info'>附加功能：</span><br><ul><li>禁止csrf攻击</li><li>附件信息展示</li><li>我的/用户回帖查看</li><li>禁止修改密码为空</li><li>上传附件检查体积</li><li>显示/隐藏右侧栏、版权、性能</li><li>注册后跳转自定义页面</li><li>注册密码复杂度/网站服务条款</li><li>自定义公告/背景图/Logo/右侧栏图片/导航栏地址/全局样式/全局JS/HTML等</li></ul>",
+    "version": "2.2.0",
+    "bbs_version": "4.0.4",
+    "installed": 1,
+    "enable": 0,
+    "hooks_rank": {
+        "admin_header_nav_start.htm": 100,
+        "my_avatar_post_start.php": 101,
+        "attach_create_start.php": 101,
+        "attach_delete_start.php": 101,
+        "my_password_post_start.php": 101,
+        "post_post_start.php": 101,
+        "post_update_post_start.php": 101,
+        "thread_create_thread_start.php": 101
+    },
+    "dependencies": []
+}

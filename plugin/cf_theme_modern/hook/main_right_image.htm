@@ -1,0 +1,20 @@
+<?php 
+$cf_theme_modern = kv_get('cf_theme_modern');
+if(isset($cf_theme_modern['right_img']) && $cf_theme_modern['right_img']){
+?>
+<div class="main_right_bottom module_box hidden-sm">
+  <div class="main_right_item">
+    <p class="title"><span class="icon fas fa-certificate" /> <?php echo $cf_theme_modern['right_img_title'];?></p>
+  </div>
+  <div class="right_image">
+    <img width="100%" src="<?php echo $cf_theme_modern['right_img_src'];?>" alt>
+  </div>
+</div>
+<?php } ?>
+<?php
+if(isset($cf_theme_modern['right_img']) && $cf_theme_modern['right_img'] && isset($cf_theme_modern['right_img_url']) && $cf_theme_modern['right_img_url'])
+echo '<script>'.
+'$(".right_image").click(function(){'.
+'window.open("'.$cf_theme_modern['right_img_url'].'", "_blank")'.
+'})</script>';
+?>

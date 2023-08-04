@@ -1,0 +1,11 @@
+{
+    "name": "轻简主题公测版",
+    "brief": "简约的现代化风格主题，全新不同凡响的风格 <a href='https://club.ntne.cc/' class='badge badge-primary'>NT社区</a>",
+    "version": "Beta-1",
+    "bbs_version": "4.0.4",
+    "installed": 1,
+    "enable": 1,
+    "hooks_rank": [],
+    "overwrites_rank": [],
+    "dependencies": []
+}

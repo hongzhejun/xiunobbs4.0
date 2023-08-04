@@ -1,0 +1,25 @@
+<template include="./plugin/cf_theme_modern/htm/my.common.template.htm">
+	<slot name="my_nav">
+		<ul class="nav box_title">
+			<!--{hook my_nav_thread_before.htm}-->
+			<li data-active="my-thread"><?php echo lang('my_thread');?></li>
+			<li data-active="my-post"><?php echo lang('my_post');?></li>
+			<!--{hook my_nav_thread_after.htm}-->
+		</ul>
+	</slot>
+</template>
+
+<script>
+$('li[data-active="nav-menu-my-thread"]').addClass('active');
+$('li[data-active="menu-my-thread"]').addClass('activeNav');
+$(".item-nav-title").text("<?php echo lang('my_threads');?>");
+</script>
+<?php
+echo '<script>$(\'li[data-active="my-thread"]\').click(function(){'.
+'location.href="'.url("my-thread").'";'.
+'});$(\'li[data-active="my-post"]\').click(function(){'.
+'location.href="'.url("my-post").'";'.
+'})</script>';
+?>
+
+<!--{hook my_nav_thread_js.htm}-->

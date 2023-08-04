@@ -1,0 +1,31 @@
+<script type="text/javascript">
+	$(function () {
+	  $('[data-toggle="tooltip"]').tooltip()
+	});
+	$(function () {
+	  $('[data-toggle="popover"]').popover()
+	})
+</script>
+<script src="plugin/nt_theme_brief/view/js/coco-message.min.js"></script>
+<script src="plugin/nt_theme_brief/view/js/sidebar.min.js"></script>
+<script type="text/javascript">
+	$(function () {
+	  $('[data-toggle="tooltip"]').tooltip()
+	});
+	$(function () {
+	  $('[data-toggle="popover"]').popover()
+	})
+	var sidebarjs = new SidebarJS();
+
+</script>
+
+<script>
+	const d = document.querySelector('.header_dropdown')
+	d.addEventListener('mouseenter',function(){
+		document.querySelector('.top-user-box-drop').classList.add('show')
+	})
+	
+		document.body.addEventListener('click',function(e){
+		document.querySelector('.top-user-box-drop').classList.remove('show')
+	})
+</script>
